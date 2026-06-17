@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Google Advance Search</title>
+   <link rel="stylesheet" href="../static/style.css">
+
+</head>
+
+<body>
+   <nav>
+      <div>
+         <a href="index.html">Google Search</a>
+         <a href="image.html">Image Search</a>
+      </div>
+   </nav>
+
+      <section class="adv-logo">
+         <img src="../media/google.png" alt="Google">
+      </section>
+
+   <main id="adv-main">
+
+      <header id="adv-src-head">
+         <p>Advanced Search</p>
+      </header>
+
+      <p id="fpw">Find pages with</p>
+
+      <form action="https://www.google.com/search" method="GET">
+         <div class="adv-seacrh">
+            <label for="as_q" class="adv-labels">All of these words:</label>
+            <input type="text" name="as_q" class="adv-src">
+         </div>
+
+         <div class="adv-seacrh">
+            <label for="as_q" class="adv-labels">This exact word or phrase:</label>
+            <input type="text" name="as_epq" class="adv-src">
+         </div>
+
+         <div class="adv-seacrh">
+            <label for="as_q" class="adv-labels">None of these words:</label>
+            <input type="text" name="as_eq" class="adv-src">
+         </div>
+
+         <div class="adv-seacrh">
+            <label for="as_oq" class="adv-labels">Any of these words:</label>
+            <input type="text" name="as_oq" class="adv-src">
+         </div>
+
+         <div>
+            <input type="submit" value="Advanced Search" class="btn">
+         </div>
+      </form>
+</body>
+
+</html>
