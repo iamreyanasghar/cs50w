@@ -10,9 +10,9 @@
         {% csrf_token %}
 
         <label for="head">Title:</label>
-        <input type="text" name="head" placeholder="Title for Page"><br><br>
+        <input type="text" name="head" value="{{ title }}" placeholder="Title for Page"><br><br>
 
-        <textarea name="content"></textarea><br>
+        <textarea name="content">{{ content }}</textarea><br>
 
         <button type="submit">Submit</button>
    </form>
