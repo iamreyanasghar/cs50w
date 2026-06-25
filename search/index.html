@@ -4,31 +4,32 @@
 <head>
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>Google Image Search</title>
-   <link rel="stylesheet" href="../static/style.css">
+   <title>Google Search</title>
+   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
    <nav>
       <div>
-         <a href="index.html">Google Search</a>
          <a href="advanced.html">Advance Search</a>
+         <a href="image.html">Image Search</a>
       </div>
    </nav>
 
-   <main>
+   <main id="main">
       <section class="logo">
-         <img src="../media/google.png" alt="Google"><sub id="foot">Images</sub>
+         <img src="google.png" alt="Google">
       </section>
 
       <form action="https://www.google.com/search" method="GET">
-         <input type="hidden" name="tbm" value="isch">
-         <input type="text" name="q" class="src-bar" autocomplete="off">
+         <input type="text" name="q" autocomplete="off" class="src-bar">
          <div class="button-group">
             <input class="btn" type="submit" value="Google Search">
             <input class="btn" name="btnI" type="submit" value="I'm Feeling Lucky">
          </div>
       </form>
+
+   </main>
 </body>
 
 </html>
