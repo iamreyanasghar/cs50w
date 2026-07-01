@@ -1,0 +1,44 @@
+{% extends 'auctions/layout.html' %}
+
+{% block body %}
+<div class="container mt-4">
+   <h2 class="mb-4">Create New Listing</h2>
+
+   {% if message %}
+      <div class="alert alert-danger">{{ message }}</div>
+   {% endif %}
+
+   <form action="{% url 'create' %}" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+
+      <div class="form-group mb-3">
+         <label for="title" class="form-label">Title: </label>
+         <input type="text" name="title" placeholder="Enter title" class="form-control" required>
+      </div>
+
+      <div class="form-group mb-3">
+         <label for="description" class="form-label">Description: </label>
+         <textarea name="description" placeholder="Describe your item" class="form-control" rows="4"
+            required></textarea>
+      </div>
+
+      <div class="form-group mb-3">
+         <label for="bid" class="form-label">Starting Bid ($): </label>
+         <input type="number" name="bid" placeholder="0.00" class="form-control" min="0" step="0.01" required>
+      </div>
+
+      <div class="form-group mb-3">
+         <label for="image" class="form-label">Image: </label>
+         <input type="file" name="image" class="form-control" accept="image/*">
+      </div>
+
+      <div class="form-group mb-3">
+         <label for="category" class="form-label">Category: </label>
+         <input type="text" name="category" placeholder="Enter category" class="form-control">
+      </div>
+
+      <button type="submit" class="btn btn-primary">Create Listing</button>
+      <a href="{% url 'index' %}" class="btn btn-secondary">Cancel</a>
+   </form>
+</div>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends "auctions/layout.html" %}
+{% load static %}
+
+{% block body %}
+   <h2>Listing: {{ listing.title }}</h2>
+
+   {% if listing.image %}
+      <img src="{{ listing.image.url }}" alt="{{ listing.title }}">
+   {% else %}
+      <p class="no-image">No image available</p>
+   {% endif %}
+
+   <h5>Description:<br>{{ listing.description }}</h5><br>
+   
+   <h3 class="fw-semibold card-text mb-1">Price: ${{ listing.price }}</h3><br>
+
+   <form method="post">
+      {% csrf_token %}
+      <input type="number" name="bid" placeholder="Bid">
+   </form>
+
+   <h4>Details:</h4>
+
+   <ul>
+      <li>Listed by: {{ listing.user }}</li>
+      <li>Category: {{ listing.category }}</li>
+   </ul>
+
+   <form method="post">
+      {% csrf_token %}
+      {% if user.is_authenticated %}
+         <input type="submit" value="Close" name="close">
+      {% endif %}
+   </form>
+
+   <p class="card-text text-muted small">Created:{{ listing.created }}</p>
+
+{% endblock %}
