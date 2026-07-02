@@ -1,20 +1,26 @@
-__*
-migrations/
+# Database
+db.sqlite3
+db.sqlite3-journal
 
-# Node.js
-node_modules/
-dist/
-build/
-
-# Python
+# Python cache
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
+
+# Virtual environment
 venv/
+env/
+ENV/
+.venv/
+
+# Environment variables
+.env
+.env.local
 
 # IDE
 .vscode/
 .idea/
-
-# Environment files
-.env
-.env.local
+.DS_Store
+*.swp
+*.swo
