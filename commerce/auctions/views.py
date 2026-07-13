@@ -72,7 +72,7 @@ def create(request):
     if request.method == "POST":
         title = request.POST.get("title")
         description = request.POST.get("description")
-        price = request.POST.get("bid")
+        price = request.POST.get("price")
         image = request.FILES.get("image")
         category = request.POST.get("category")
 
@@ -82,7 +82,8 @@ def create(request):
                     user=request.user,
                     title=title,
                     description=description,
-                    price=int(price),
+                    price=float(price),
+                    starting_price=float(price),
                     category=category if category else None,
                     active=True
                 )
@@ -104,39 +105,98 @@ def create(request):
     
     return render(request, "auctions/create.html")
 
-
+@login_required
 def watchlist(request):
-    return render(request, "auctions/watchlist.html")
+    listings = request.user.watchlist.all()
+    return render(request, "auctions/watchlist.html", {
+        "listings": listings
+    })
 
 
 def categories(request):
-    return render(request, "auctions/categories.html")
+    return render(request, "auctions/categories.html", {
+        "categories": Listing.objects.values_list('category', flat=True).distinct()
+    })
 
 
+def get_cat(request, cat):
+    listing = Listing.objects.filter(category=cat, active=True)
+
+    return render(request, "auctions/get_cat.html", {
+        "listings": listing,
+        "category": cat
+    })
+
+
+@login_required
 def get_listing(request, id):
-    listing = get_object_or_404(Listing, id=id, active=True)
+    listing = get_object_or_404(Listing, id=id)
+    user = request.user
 
-    if request.method == "POST":
-        close = request.POST.get("close")
-        bid = request.POST.get("bid")
+    if listing.active:
 
-        if close:
-            listing.active = False
-            highest_bid = listing.bids.order_by('-amount').first()
-
-            listing.save()
-            
-            return redirect('index')
-
-        if bid:
-            if int(bid) > listing.price:
-                listing.bid = bid
+        if request.method == "POST":
+            close = request.POST.get("close")
+            bid = request.POST.get("bid")
+            comment = request.POST.get("comment")
+            add = request.POST.get("add")
+            remove = request.POST.get("remove")
+        
+    
+            if close:
+                listing.active = False
+                highest_bid = listing.bids.order_by('-bid_price').first()
+    
+                if highest_bid:
+                    listing.winner = highest_bid.user
+    
                 listing.save()
+                
+                return redirect('index')
+    
+            if bid:
+                try:
+                    bid_amount = int(bid)
+                    if bid_amount > listing.price:
+                        # Create a new bid
+                        new_bid = Bid(
+                            listing=listing,
+                            user=request.user,
+                            bid_price=bid_amount
+                        )
+                        new_bid.save()
+                        
+                        # Update the listing price to the new highest bid
+                        listing.price = bid_amount
+                        listing.save()
+                        
+                        messages.success(request, "Bid placed successfully!")
+                    else:
+                        messages.error(request, "Bid must be higher than current price.")
+                except ValueError:
+                    messages.error(request, "Please enter a valid number.") 
 
-            else:
-                pass          
+            if comment:
+                new_comment = Comment(
+                    listing=listing,
+                    user=request.user,
+                    comment=comment
+                )
 
+                new_comment.save()
+
+            if add:
+                if not user.watchlist.filter(id=listing.id).exists():
+                    user.watchlist.add(listing)
+                    messages.success(request, "Added to watchlist!")
+                return redirect('listing', id=listing.id)
+            if remove:
+                if user.watchlist.filter(id=listing.id).exists():
+                    user.watchlist.remove(listing)
+                    messages.success(request, "Removed from watchlist!")
+                return redirect('listing', id=listing.id)
 
     return render(request, "auctions/listing.html", {
-        "listing": listing
+        "listing": listing,
+        "comments": listing.comments.all()
     })

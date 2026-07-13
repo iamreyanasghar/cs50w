@@ -3,7 +3,7 @@ from django.db import models
 
 
 class User(AbstractUser):
-    pass
+    watchlist = models.ManyToManyField("Listing", related_name="watchlist")
 
     def __str__(self):
         return self.username
@@ -12,9 +12,10 @@ class User(AbstractUser):
 class Listing(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="listings")
     title = models.CharField(max_length=64)
-    price = models.IntegerField()
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    starting_price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)
-    description = models.CharField(max_length=500)
+    description = models.TextField()
     image = models.ImageField(upload_to="listing_images/", blank=True, null=True)
     active = models.BooleanField(default=True)
     category = models.CharField(max_length=64, blank=True, null=True)
@@ -27,7 +28,7 @@ class Listing(models.Model):
 class Bid(models.Model):
     listing = models.ForeignKey(Listing, on_delete=models.CASCADE, related_name="bids")
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="bids")
-    bid_price = models.IntegerField()
+    bid_price = models.DecimalField(max_digits=10, decimal_places=2)
     time = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

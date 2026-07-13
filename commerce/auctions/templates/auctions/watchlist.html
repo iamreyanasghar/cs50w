@@ -2,5 +2,52 @@
 {% load static %}
 
 {% block body %}
-   Watchlist
+    <div id="listings-container">
+        
+        <div id="listings-grid">
+            
+            <!-- Active Listings Section -->
+            <h2>My Watchlist Listings</h2>
+            {% if user.is_authenticated %}
+                {% for listing in listings %}
+                    <a class="nav-link" href="{% url 'listing' listing.id %}">
+                        <div class="listing-item card mb-3">
+                        
+                            <div class="row g-0">
+
+                                <div class="col-md-4 listing-image-wrapper">
+
+                                    {% if listing.image %}
+                                        <img src="{{ listing.image.url }}" alt="{{ listing.title }}" class="img-fluid rounded-start listing-image">
+                                    {% else %}
+                                        <p class="no-image">No image available</p>
+                                    {% endif %}
+
+                                </div>
+
+                                <div class="col-md-8">
+                                    <div class="card-body listing-body">
+                                        <h3 class="card-title fw-bold">{{ listing.title }}</h3>
+
+                                        <h4 class="fw-semibold card-text mb-1">Price: ${{ listing.price }}</h4>
+                                        <h5>{{ listing.description }}</h5>
+                                        <p class="card-text text-muted small">Created: {{ listing.created }}</p>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </a>
+                {% empty %}
+                    <p id="no-listings">No watchlist listings available</p>
+                {% endfor %}
+
+            {% else %}
+                    <p>Please login / signup to view watchlist</p>
+            {% endif %}
+
+        </div>
+    </div>
 {% endblock %}
+

@@ -1,0 +1,31 @@
+{% extends "auctions/layout.html" %}
+{% load static %}
+
+{% block body %}
+    <h2>Listings in {{ category }}</h2>
+    {% for listing in listings %}
+        <a class="nav-link" href="{% url 'listing' listing.id %}">
+            <div class="listing-item card mb-3">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        {% if listing.image %}
+                            <img src="{{ listing.image.url }}" alt="{{ listing.title }}" class="img-fluid rounded-start">
+                        {% else %}
+                            <p class="no-image">No image available</p>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h3 class="card-title">{{ listing.title }}</h3>
+                            <h4>Price: ${{ listing.price }}</h4>
+                            <p>{{ listing.description }}</p>
+                            <p class="text-muted small">Created: {{ listing.created }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+    {% empty %}
+        <p>No active listings in this category</p>
+    {% endfor %}
+{% endblock %}

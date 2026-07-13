@@ -2,5 +2,11 @@
 {% load static %}
 
 {% block body %}
-   Categories
+   <ul>
+      {% for category in categories %}
+         {% if category is not None %}
+            <li><a href="{% url 'get_cat' category %}">{{ category }}</a></li>
+         {% endif %}
+      {% endfor %}
+   </ul>
 {% endblock %}
