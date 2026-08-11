@@ -51,3 +51,22 @@ function send_email() {
     });
 
 }
+
+// to get data from compose form
+// event.preventDefault();
+  // const recipient = document.getElementById('compose-recipients').value;
+  // const subject = document.getElementById('compose-subject').value;
+  // const body = document.getElementById('compose-body').value;
+// 
+  // fetch('/emails', {
+    // method: 'POST',
+    // body: JSON.stringify({
+      // recipients: recipient,
+      // subject: subject,
+      // body: body
+    // })
+  // })
+    // .then(response => response.json())
+    // .then(result => {
+      // console.log(result);
+    // });
