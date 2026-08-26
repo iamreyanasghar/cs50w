@@ -58,4 +58,58 @@ function load_mailbox(mailbox) {
 
   // Show the mailbox name
   document.querySelector('#emails-view').innerHTML = `<h3>${mailbox.charAt(0).toUpperCase() + mailbox.slice(1)}</h3>`;
+
+  // display appropriate mails
+  fetch(`/emails/${mailbox}`)
+    .then(response => response.json())
+    .then(emails => {
+      // Print emails
+      console.log(emails);
+
+      // ... do something else with emails ...
+
+      document.querySelector('#emails-view').innerHTML = emails.map(mail => {
+        // 1. Check if the email is read to determine background color
+        const backgroundColor = mail.read ? '#e0e0e0' : '#ffffff';
+
+        // 2. Return the structured HTML matching your design
+        return `
+        <div class="email-box" 
+             onclick="viewEmail(${mail.id})" 
+             style="display: flex; justify-content: space-between; align-items: center; border: 1px solid black; padding: 10px 15px; margin-bottom: 2px; cursor: pointer; background-color: ${backgroundColor}; font-family: sans-serif; font-size: 20px;">
+            
+            <!-- Left Side: Sender and Subject -->
+            <div style="display: flex; gap: 15px;">
+                <span style="font-weight: bold; min-width: 140px;">${mail.sender}</span>
+                <span style="color: #000000;">${mail.subject}</span>
+            </div>
+
+            <!-- Right Side: Timestamp -->
+            <div style="color: #757575;">
+                ${mail.timestamp}
+            </div>
+            
+        </div>
+    `;
+      }).join('');
+
+
+    });
+
+}
+
+function viewEmail(emailId) {
+  // just verify
+  console.log("Link worked successfully!")
+
+  // mark it as readed
+  fetch(`/emails/${emailId}`, {
+    method: 'PUT',
+    body: JSON.stringify({
+      read: true
+    })
+  })
+
+
+  // display the email content
 }
