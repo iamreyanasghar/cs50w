@@ -42,6 +42,7 @@ function compose_email() {
 
   // Show compose view and hide other views
   document.querySelector('#emails-view').style.display = 'none';
+  document.querySelector('#read-email').style.display = 'none';
   document.querySelector('#compose-view').style.display = 'block';
 
   // Clear out composition fields
@@ -55,6 +56,7 @@ function load_mailbox(mailbox) {
   // Show the mailbox and hide other views
   document.querySelector('#emails-view').style.display = 'block';
   document.querySelector('#compose-view').style.display = 'none';
+  document.querySelector('#read-email').style.display = 'none';
 
   // Show the mailbox name
   document.querySelector('#emails-view').innerHTML = `<h3>${mailbox.charAt(0).toUpperCase() + mailbox.slice(1)}</h3>`;
@@ -99,8 +101,6 @@ function load_mailbox(mailbox) {
 }
 
 function viewEmail(emailId) {
-  // just verify
-  console.log("Link worked successfully!")
 
   // mark it as readed
   fetch(`/emails/${emailId}`, {
@@ -110,6 +110,34 @@ function viewEmail(emailId) {
     })
   })
 
-
   // display the email content
+  fetch(`/emails/${emailId}`)
+    .then(response => response.json())
+    .then(email => {
+      // Print email
+      console.log(email);
+
+      // ... do something else with email ...
+
+      document.querySelector('#emails-view').style.display = 'none';
+      document.querySelector('#compose-view').style.display = 'none';
+      document.querySelector("#read-email").style.display = 'block';
+
+      sender = email.sender
+      subject = email.subject
+      body = email.body
+      time = email.timestamp
+      receiver = email.recipients
+
+      document.querySelector("#read-email").innerHTML = `
+        <p> <b>From:</b> ${sender} </p>
+        <p> <b>To:</b> ${receiver} </p>
+        <p> <b>Subject:</b>  ${subject} </p>
+        <p> <b>Timestamp:</b> ${time} </p>
+        <hr>
+  
+        <p>${body}</p>
+      `
+    
+    });
 }
