@@ -1,10 +1,12 @@
 from django.contrib.auth import authenticate, login, logout
-from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
+from django.db import IntegrityError
+from django.contrib import messages
 from django.urls import reverse
 
-from .models import User
+from .models import User, Post, Comment
 
 
 def index(request):
@@ -61,3 +63,28 @@ def register(request):
         return HttpResponseRedirect(reverse("index"))
     else:
         return render(request, "network/register.html")
+
+
+@login_required
+def new_post(request):
+    if request.method == "POST":
+
+        # collect data
+        post = request.POST["new_post"]
+        user = request.user
+
+        # verify if user enter all required data
+        if post:
+            post = Post(
+                content=post,
+                user=user
+            )
+
+            post.save()
+            messages.success(request, "Post posted successfully!")
+            return redirect('index')
+
+        else:
+            messages.error(request, "Missing Required Fields! Please fill in all required fields.")
+    
+    return render(request, "network/new_post.html")

@@ -2,7 +2,7 @@
 
 {% block body %}
 
-   <div id="new_post">
+   <div id="compose">
       <h2>New Post:</h2>
 
       <form action="{% url 'new_post' %}" method="post">
@@ -13,7 +13,5 @@
          <button type="submit" id="submit_post">Post</button>
       </form>
    </div>
-
-    <!-- <a href="{% url 'new_post' %}">New Post</a> -->
 
 {% endblock %}

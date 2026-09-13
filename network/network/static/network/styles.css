@@ -1,0 +1,40 @@
+#new_post {
+   margin: 1%;
+   padding: 1%;
+   border: 1px solid lightgrey;
+   border-radius: 10px;
+}
+
+#submit_post {
+   margin-top: 0.5%;
+}
+
+h2 {
+   padding-top: 0.5%;
+}
+
+button {
+   border-radius: 5px;
+   background-color: #0b7aff;
+   color: white;
+   font-size: 18px;
+   width: 90px;
+   height: 35px;
+   border: none;
+   outline: none; 
+}
+
+button:hover {
+   background-color: #005ccc;
+}
+
+textarea {
+  width: 98%;
+  height: 150px;
+  padding: 12px;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  background-color: #f8f8f8;
+  font-size: 16px;
+}
