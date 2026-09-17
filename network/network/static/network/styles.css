@@ -10,7 +10,7 @@
 }
 
 h2 {
-   padding-top: 0.5%;
+   padding: 1%;
 }
 
 button {
@@ -21,7 +21,7 @@ button {
    width: 90px;
    height: 35px;
    border: none;
-   outline: none; 
+   outline: none;
 }
 
 button:hover {
@@ -29,12 +29,39 @@ button:hover {
 }
 
 textarea {
-  width: 98%;
-  height: 150px;
-  padding: 12px;
-  box-sizing: border-box;
-  border: 2px solid #ccc;
-  border-radius: 4px;
-  background-color: #f8f8f8;
-  font-size: 16px;
+   width: 98%;
+   height: 150px;
+   padding: 12px;
+   box-sizing: border-box;
+   border: 2px solid #ccc;
+   border-radius: 4px;
+   background-color: #f8f8f8;
+   font-size: 16px;
+}
+
+
+.button-link {
+   display: inline-block;
+   padding: 7px 12px;
+   background-color: #007BFF;
+   color: white;
+   text-decoration: none;
+   border-radius: 5px;
+   font-family: sans-serif;
+}
+
+.button-link:hover {
+   background-color: #0056b3;
+   color: white;
+   text-decoration: none;
+}
+.post {
+   border: 1px solid lightgrey;
+   border-radius: 7px;
+   padding: 25px 20px;
+   margin: 10px;
+}
+
+.post_content {
+   padding: 3px;
 }

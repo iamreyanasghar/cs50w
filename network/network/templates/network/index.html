@@ -2,18 +2,34 @@
 
 {% block body %}
 
-   <div id="new_post">
-      <h2>New Post:</h2>
+   <!-- <a href="{% url 'new_post' %}" class="button-link">New Post</a>
 
-      <form action="{% url 'new_post' %}" method="post">
-         {% csrf_token %}
+   <div id="all_posts">
+      <h2>All Posts:</h2>
+      {% for post in posts %}
+         <div class="post">
+            <h4 class="post_content">{{post.user}}</h4>
+            <h6 class="post_content">{{post.content}}</h6>
+            <p class="card-text text-muted small post_content">{{post.date}}</p>
+         </div>
+      {% endfor %}
+   </div> -->
 
-         <textarea name="new_post" id="new_post"></textarea>
-         <br>
-         <button type="submit" id="submit_post">Post</button>
-      </form>
+   <div id="all_posts">
+   <!-- Flex wrapper to align heading and button -->
+   <div class="header-container">
+      <h2>All Posts:</h2>
+      <a href="{% url 'new_post' %}" class="button-link">New Post</a>
    </div>
 
-    <!-- <a href="{% url 'new_post' %}">New Post</a> -->
+   {% for post in posts %}
+      <div class="post">
+         <h4 class="post_content">{{post.user}}</h4>
+         <h6 class="post_content">{{post.content}}</h6>
+         <p class="card-text text-muted small post_content">{{post.date}}</p>
+      </div>
+   {% endfor %}
+</div>
+
 
 {% endblock %}

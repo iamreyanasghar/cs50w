@@ -2,16 +2,18 @@
 
 {% block body %}
 
-   <div id="compose">
-      <h2>New Post:</h2>
+   {% if user.is_authenticated %}
+      <div id="new_post">
+         <h2>New Post:</h2>
 
-      <form action="{% url 'new_post' %}" method="post">
-         {% csrf_token %}
+         <form action="{% url 'new_post' %}" method="post">
+            {% csrf_token %}
 
-         <textarea name="new_post" id="new_post"></textarea>
-         <br>
-         <button type="submit" id="submit_post">Post</button>
-      </form>
-   </div>
+            <textarea name="new_post" id="new_post"></textarea>
+            <br>
+            <button type="submit" id="submit_post">Post</button>
+         </form>
+      </div>
+   {% endif %}
 
 {% endblock %}

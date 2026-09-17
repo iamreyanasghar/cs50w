@@ -6,11 +6,15 @@ from django.db import IntegrityError
 from django.contrib import messages
 from django.urls import reverse
 
-from .models import User, Post, Comment
+from .models import User, Post
 
 
 def index(request):
-    return render(request, "network/index.html")
+    posts = Post.objects.all().order_by("id").reverse()
+
+    return render(request, "network/index.html", {
+        "posts": posts
+    })
 
 
 def login_view(request):
