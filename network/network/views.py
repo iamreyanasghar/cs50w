@@ -92,3 +92,14 @@ def new_post(request):
             messages.error(request, "Missing Required Fields! Please fill in all required fields.")
     
     return render(request, "network/new_post.html")
+
+
+def profile(request, id):
+    user = User.objects.get(id=id)
+    return render(request, "network/profile.html")
+
+
+
+
+
+
