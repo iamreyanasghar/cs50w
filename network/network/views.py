@@ -6,7 +6,7 @@ from django.db import IntegrityError
 from django.contrib import messages
 from django.urls import reverse
 
-from .models import User, Post
+from .models import User, Post, Follow
 
 
 def index(request):
@@ -96,7 +96,17 @@ def new_post(request):
 
 def profile(request, id):
     user = User.objects.get(id=id)
-    return render(request, "network/profile.html")
+    posts =  Post.objects.filter(user=user).order_by("id").reverse()
+
+    following = Follow.objects.filter(user=user)
+    followers = Follow.objects.filter(follower=user)
+
+    return render(request, "network/profile.html", {
+            "posts": posts,
+            "following": following,
+            "followers": followers,
+            "user_profile": user
+        })
 
 
 

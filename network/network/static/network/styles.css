@@ -13,6 +13,10 @@ h2 {
    padding: 1%;
 }
 
+h3 {
+   margin: 12px;
+}
+
 textarea {
    width: 98%;
    height: 150px;
