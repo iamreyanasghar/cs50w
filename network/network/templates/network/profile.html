@@ -6,8 +6,17 @@
 
 	{% if user.is_authenticated %}
 		{% if user != user_profile %}
-		    <button>Follow</button>
-		    <button>Unfollow</button>
+		    {% if isFollowing %}
+		    	<form action="{% url 'follow' %}" method="post">
+			    {% csrf_token %}
+			    <button class="follow">Follow</button>
+			</form>
+		    {% else %}
+		    	<form action="{% url 'unfollow' %}" method="post">
+			    {% csrf_token %}
+			    <button class="follow">Unfollow</button>
+			</form>
+	 	    {% endif %}
 		{% endif %}
 	{% endif %}
 
@@ -16,7 +25,7 @@
 			<h4 class="post_content"><a href="{% url 'profile' post.user.id %}">{{post.user}}</a></h4>
 			<h6 class="post_content">{{post.content}}</h6>
 			<p class="card-text text-muted small post_content">{{post.date}}</p>
-	</div>
+		</div>
 	{% endfor %}
 
 {% endblock %}

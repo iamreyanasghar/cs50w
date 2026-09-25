@@ -101,15 +101,22 @@ def profile(request, id):
     following = Follow.objects.filter(user=user)
     followers = Follow.objects.filter(follower=user)
 
+    # let user is not following
+    is_following = False
+
     return render(request, "network/profile.html", {
             "posts": posts,
             "following": following,
             "followers": followers,
-            "user_profile": user
+            "user_profile": user,
+            "isFollowing": is_following
         })
 
 
 
+def follow(request, user):
+    return HttpResponse("Follow view")
 
 
-
+def unfollow(request):
+    return HttpResponse("Unfollow view")
