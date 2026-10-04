@@ -114,7 +114,7 @@ def profile(request, id):
 
 
 
-def follow(request, user):
+def follow(request):
     return HttpResponse("Follow view")
 
 

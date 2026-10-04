@@ -7,14 +7,14 @@
 	{% if user.is_authenticated %}
 		{% if user != user_profile %}
 		    {% if isFollowing %}
-		    	<form action="{% url 'follow' %}" method="post">
-			    {% csrf_token %}
-			    <button class="follow">Follow</button>
-			</form>
-		    {% else %}
 		    	<form action="{% url 'unfollow' %}" method="post">
 			    {% csrf_token %}
 			    <button class="follow">Unfollow</button>
+			</form>
+		    {% else %}
+		    	<form action="{% url 'follow' %}" method="post">
+			    {% csrf_token %}
+			    <button class="follow">Follow</button>
 			</form>
 	 	    {% endif %}
 		{% endif %}
