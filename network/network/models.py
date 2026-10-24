@@ -15,5 +15,5 @@ class Post(models.Model):
         return f"Post {self.id} made by {self.user} on {self.date.strftime('%d %b %Y %H:%M:%S')}"
 
 class Follow(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_who_is_following")
-    follower = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_who_is_followed")
+    follower = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_who_is_following")
+    followed = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_who_is_followed")

@@ -1,10 +1,12 @@
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.db import IntegrityError
 from django.contrib import messages
 from django.urls import reverse
+from django.contrib.auth.models import User
+
 
 from .models import User, Post, Follow
 
@@ -98,25 +100,52 @@ def profile(request, id):
     user = User.objects.get(id=id)
     posts =  Post.objects.filter(user=user).order_by("id").reverse()
 
-    following = Follow.objects.filter(user=user)
-    followers = Follow.objects.filter(follower=user)
+    following = Follow.objects.filter(follower=user)
+    followers = Follow.objects.filter(followed=user)
 
     # let user is not following
-    is_following = False
+    current_user = Follow.objects.filter(followed=user)
+    if current_user:
+        is_following = True
+
+    else:
+        is_following = False
 
     return render(request, "network/profile.html", {
             "posts": posts,
             "following": following,
             "followers": followers,
             "user_profile": user,
-            "isFollowing": is_following
+            "isFollowing": is_following,
+            "current": current_user
         })
 
 
 
-def follow(request):
-    return HttpResponse("Follow view")
+def follow(request, id):
+    user_to_follow = get_object_or_404(User, id=id)
+    current_user = request.user
+
+    print(f"id: {id}, current_user: {current_user.id}, user_to_follow: {user_to_follow.id}")
+
+    follow_relation = Follow(
+        follower=current_user,
+        followed=user_to_follow
+    )
+
+    follow_relation.save()
+
+    return redirect('profile', id=id)
 
 
-def unfollow(request):
-    return HttpResponse("Unfollow view")
+def unfollow(request, id):
+    user_to_unfollow = get_object_or_404(User, id=id)
+    current_user = request.user
+
+    Follow.objects.filter(
+        follower__id=current_user.id, 
+        followed__id=user_to_unfollow.id
+    ).delete()
+                                
+    return redirect('profile', id=id)
+
