@@ -149,3 +149,16 @@ def unfollow(request, id):
                                 
     return redirect('profile', id=id)
 
+@login_required
+def following(request, id):
+    user = User.objects.get(id=id)
+    following = Follow.objects.filter(follower=user)
+
+    ids = list(following.values_list("followed", flat=True))
+    
+    # negative sign does the work of arranging in descending order instead of default ascending
+    posts = Post.objects.filter(user__in=ids).order_by("-id")   
+
+    return render(request, "network/following.html", {
+        "posts": posts
+    })

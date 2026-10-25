@@ -17,3 +17,6 @@ class Post(models.Model):
 class Follow(models.Model):
     follower = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_who_is_following")
     followed = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_who_is_followed")
+
+    def __str__(self):
+        return f"The user {self.follower} followed {self.followed}"
