@@ -96,6 +96,31 @@ def new_post(request):
     return render(request, "network/new_post.html")
 
 
+@login_required
+def edit_post(request, id):
+    post = Post.objects.get(id=id)
+
+    if request.method == "POST":
+        post = request.POST["new_post"]
+        user = request.user
+
+        if post:
+            post = Post(
+                    content=post.content,
+                    user=user
+            )
+
+            post.save()
+            messages.success(request, "Post edited successfully!")
+
+        else:
+            message.error(request, "Missing Required Fields! Please fill in all required fields.")
+
+    return render(request, "network/edit_post.html",{
+        "post": post
+    })
+
+
 def profile(request, id):
     user = User.objects.get(id=id)
     posts =  Post.objects.filter(user=user).order_by("id").reverse()

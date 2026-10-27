@@ -12,9 +12,19 @@
 
    {% for post in posts %}
       <div class="post">
-         <h4 class="post_content"><a href="{% url 'profile' post.user.id %}">{{post.user}}</a></h4>
-         <h6 class="post_content">{{post.content}}</h6>
-         <p class="card-text text-muted small post_content">{{post.date}}</p>
+
+	  <div class="post-content">
+             <h4 class="post_content"><a href="{% url 'profile' post.user.id %}">{{post.user}}</a></h4>
+             <h6 class="post_content">{{post.content}}</h6>
+             <p class="card-text text-muted small post_content">{{post.date}}</p>
+	 </div>
+	
+         {% if user.is_authenticated %}
+             {% if user == post.user %}
+                  <a id="edit" href="{% url 'edit_post' post.id %}">Edit</a>
+	     {% endif %}
+	 {% endif %}
+
       </div>
    {% endfor %}
 </div>
