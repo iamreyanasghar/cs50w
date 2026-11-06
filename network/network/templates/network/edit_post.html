@@ -2,6 +2,26 @@
 
 {% block body %}
 
+   <script>
+       document.addEventListener('DOMContentLoaded', () => {
+
+	   document.querySelector('form').addEventListener('submit', function(event) {
+		event.preventDefault();
+
+		const formData = new FormData(this);
+		console.log(formData)
+
+			      fetch(`/edit_post/{{ post.id }}`, {
+		method: 'POST',
+		body: formData
+		}).then(response => response.text())
+		  .then(data => console.log('Form submitted successfully:', data))
+		  .catch(error => console.error('Submission failed:', error));
+	  });
+	});
+
+
+   </script>
    {% if user.is_authenticated %}
       <div id="new_post">
          <h2>Edit Post:</h2>

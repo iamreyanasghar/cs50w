@@ -101,7 +101,6 @@ def edit_post(request, id):
     post = Post.objects.get(id=id)
 
     if request.method == "POST":
-        post = request.POST["new_post"]
         user = request.user
 
         if post:
