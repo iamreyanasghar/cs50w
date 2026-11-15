@@ -2,26 +2,34 @@
 
 {% block body %}
 
-   <script>
-       document.addEventListener('DOMContentLoaded', () => {
+	<script>
+		  document.addEventListener('DOMContentLoaded', () => {
+					      document.querySelector('form').addEventListener('submit', function(event) {
+								            event.preventDefault();
 
-	   document.querySelector('form').addEventListener('submit', function(event) {
-		event.preventDefault();
+								            const formData = new FormData(this);
+								            console.log(formData);
 
-		const formData = new FormData(this);
-		console.log(formData)
+								            fetch(`/edit/{{ post.id }}`, {
+												            method: 'POST',
+												            body: formData
+												          })
+								              .then((response) => {
+												                if (!response.ok) {
+																	            throw new Error('Network response was not ok');
+																	          }
+												                return response.text();
+												              })
+								              .then((data) => {
+												                console.log('Form submitted successfully!');
+												                window.location.href = '/';
+												              })
+								              .catch((error) => console.error('Submission failed:', error));
+								          }); // <-- Added: closes the 'submit' listener
+					    });   // <-- Added: closes the 'DOMContentLoaded' listener
+	</script>
 
-			      fetch(`/edit_post/{{ post.id }}`, {
-		method: 'POST',
-		body: formData
-		}).then(response => response.text())
-		  .then(data => console.log('Form submitted successfully:', data))
-		  .catch(error => console.error('Submission failed:', error));
-	  });
-	});
 
-
-   </script>
    {% if user.is_authenticated %}
       <div id="new_post">
          <h2>Edit Post:</h2>

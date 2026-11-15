@@ -2,13 +2,18 @@
 
 {% block body %}
 
+<div class="header-container">
+     <h2>Following:</h2>
+</div>
 
 <div class="all_posts">
    {% for post in posts %}
       <div class="post">
-         <h4 class="post_content"><a href="{% url 'profile' post.user.id %}">{{post.user}}</a></h4>
-         <h6 class="post_content">{{post.content}}</h6>
-         <p class="card-text text-muted small post_content">{{post.date}}</p>
+	 <div class="post-content">
+         	<h4 class="post_content"><a href="{% url 'profile' post.user.id %}">{{post.user}}</a></h4>
+         	<h6 class="post_content">{{post.content}}</h6>
+         	<p class="card-text text-muted small post_content">{{post.date}}</p>
+	 </div>
       </div>
    {% endfor %}
 </div>

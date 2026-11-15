@@ -87,9 +87,8 @@ button:hover {
    display: flex;
    justify-content: space-between;
    align-items: flex-start;
-}
-
-.post-content {
+   
+.post-content{
    flex-grow: 1; 
    text-align: left;
 }

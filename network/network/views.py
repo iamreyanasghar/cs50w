@@ -101,13 +101,11 @@ def edit_post(request, id):
     post = Post.objects.get(id=id)
 
     if request.method == "POST":
+        new = request.POST["new_post"]
         user = request.user
 
         if post:
-            post = Post(
-                    content=post.content,
-                    user=user
-            )
+            post.content = new
 
             post.save()
             messages.success(request, "Post edited successfully!")
